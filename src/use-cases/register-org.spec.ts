@@ -1,7 +1,7 @@
 import { compare } from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { InMemoryAddressesRepository } from '@/repositories/in-memory/in-memory-addresses-ropository'
+import { InMemoryAddressesRepository } from '@/repositories/in-memory/in-memory-addresses-repository'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
 import { RegisterOrgUseCase } from '@/use-cases/register-org'
 

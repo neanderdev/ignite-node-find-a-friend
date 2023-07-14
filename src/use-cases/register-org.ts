@@ -1,8 +1,8 @@
 import { Org } from '@prisma/client'
 import { hash } from 'bcryptjs'
 
-import { AddressesRepository } from '@/repositories/interfaces/addresses-repository'
-import { OrgsRepository } from '@/repositories/interfaces/orgs-repository'
+import { InMemoryAddressesRepository } from '@/repositories/in-memory/in-memory-addresses-repository'
+import { InMemoryOrgsRepository } from './../repositories/in-memory/in-memory-orgs-repository'
 
 import { OrgAlreadyExistsError } from './errors/org-already-exists'
 
@@ -29,15 +29,15 @@ interface RegisterOrgResponse {
 
 export class RegisterOrgUseCase {
   constructor(
-    private orgsRepository: OrgsRepository,
-    private addressesRepository: AddressesRepository,
+    private orgsRepository: InMemoryOrgsRepository,
+    private addressesRepository: InMemoryAddressesRepository,
   ) {}
 
   async execute({
     org,
     address,
   }: RegisterOrgRequest): Promise<RegisterOrgResponse> {
-    const password_hash = await hash(org.password, 8)
+    const password_hash = await hash(org.password, 6)
 
     const orgAlreadyExists = await this.orgsRepository.findByEmail(org.email)
 
