@@ -4,13 +4,16 @@ import { AddressesRepository } from '@/repositories/interfaces/addresses-reposit
 import { OrgsRepository } from '@/repositories/interfaces/orgs-repository'
 import { PetsRepository } from '@/repositories/interfaces/pets-repository'
 
-import { CityNotFoundError } from './errors/city-not-found-error'
+import { CityNotProvidedError } from './errors/city-not-provided-error'
 
 interface FindNotAdoptedRequest {
   city: string
   page: number
-  breed?: string
-  age?: number
+  age?: string | undefined
+  size?: string | undefined
+  energy?: string | undefined
+  independence?: string | undefined
+  environment?: string | undefined
 }
 
 interface FindNotAdoptedResponse {
@@ -27,13 +30,24 @@ export class FindNotAdoptedUseCase {
   async execute({
     city,
     page,
-    breed,
     age,
+    size,
+    energy,
+    independence,
+    environment,
   }: FindNotAdoptedRequest): Promise<FindNotAdoptedResponse> {
     const addresses = await this.addressesRepository.findByCity(city)
-    if (!addresses || addresses.length === 0) {
-      throw new CityNotFoundError()
+
+    if (!addresses) {
+      throw new CityNotProvidedError()
     }
+
+    if (addresses.length === 0) {
+      return {
+        pets: [],
+      }
+    }
+
     const orgs = await this.orgsRepository.findByCity(city, addresses)
 
     if (orgs.length === 0) {
@@ -42,7 +56,15 @@ export class FindNotAdoptedUseCase {
       }
     }
 
-    const pets = await this.petsRepository.findPets(page, orgs, breed, age)
+    const pets = await this.petsRepository.findPets(
+      page,
+      orgs,
+      age,
+      size,
+      energy,
+      independence,
+      environment,
+    )
 
     return {
       pets,
