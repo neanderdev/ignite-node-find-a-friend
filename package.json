@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node build/server.js",
     "start:dev": "tsx watch src/server.ts",
+    "build": "tsup src --out-dir build",
+    "test": "vitest run --dir src/use-cases",
+    "test:watch": "vitest --dir src/use-cases",
     "lint": "eslint src --ext .ts --fix"
   },
   "repository": {
@@ -20,6 +24,7 @@
   "homepage": "https://github.com/neanderdev/ignite-node-find-a-friend#readme",
   "dependencies": {
     "@prisma/client": "5.0.0",
+    "bcryptjs": "2.4.3",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "fastify": "^4.19.2",
@@ -27,11 +32,14 @@
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.0.1",
+    "@types/bcryptjs": "2.4.2",
     "@types/node": "^20.4.2",
     "eslint": "^8.44.0",
     "prisma": "5.0.0",
     "tsup": "^7.1.0",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vite-tsconfig-paths": "4.2.0",
+    "vitest": "0.33.0"
   }
 }
