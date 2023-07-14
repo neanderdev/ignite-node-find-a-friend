@@ -1,12 +1,12 @@
 import {
-  Prisma,
-  Pet,
   Org,
+  Pet,
   PetAge,
-  PetSize,
   PetEnergy,
-  PetIndependence,
   PetEnvironment,
+  PetIndependence,
+  PetSize,
+  Prisma,
 } from '@prisma/client'
 
 import { prisma } from '@/lib/prisma'
@@ -63,8 +63,10 @@ export class PrismaPetsRepository implements PetsRepository {
         independence: independence as PetIndependence,
         environment: environment as PetEnvironment,
         adopted: false,
-        org_id: {
-          in: org_list?.map((org) => org.id),
+        org: {
+          id: {
+            in: org_list?.map((org) => org.id),
+          },
         },
       },
       skip: (page - 1) * 20,

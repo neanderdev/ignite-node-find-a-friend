@@ -9,7 +9,7 @@ import { env } from './env'
 
 export const app = fastify()
 
-// Register fastify-jwt
+// Register JWT plugin
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
   cookie: {
@@ -21,7 +21,7 @@ app.register(fastifyJwt, {
   },
 })
 
-// Register cookies
+// Register Cookies plugin
 app.register(fastifyCookie)
 
 // Register routes
@@ -30,6 +30,8 @@ app.register(orgsRoutes)
 // Register error handler
 app.setErrorHandler((error, request, reply) => {
   if (error instanceof ZodError) {
+    console.error(error.issues)
+
     return reply
       .status(400)
       .send({ message: 'Validation Error!', issues: error.format() })

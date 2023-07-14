@@ -1,16 +1,16 @@
 import {
   Pet,
   PetAge,
-  PetEnvironment,
   PetEnergy,
+  PetEnvironment,
   PetIndependence,
-  PetSize,
   PetRequirement,
+  PetSize,
 } from '@prisma/client'
 
 import { OrgsRepository } from '@/repositories/interfaces/orgs-repository'
-import { PetsRepository } from '@/repositories/interfaces/pets-repository'
 import { PetRequirementsRepository } from '@/repositories/interfaces/pet-requirements-repository'
+import { PetsRepository } from '@/repositories/interfaces/pets-repository'
 
 import { OrgNotFoundError } from './errors/org-not-found-error'
 
@@ -56,10 +56,6 @@ export class RegisterPetUseCase {
       environment: pet.environment,
       org_id: pet.org_id,
     })
-
-    if (!createdPet) {
-      throw new Error('Error creating pet')
-    }
 
     if (!pet.requirements) {
       return {
