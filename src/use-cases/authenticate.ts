@@ -1,7 +1,7 @@
 import { Org } from '@prisma/client'
 import { compare } from 'bcryptjs'
 
-import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
+import { OrgsRepository } from '@/repositories/interfaces/orgs-repository'
 
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 
@@ -15,7 +15,7 @@ interface AuthenticateResponse {
 }
 
 export class AuthenticateUseCase {
-  constructor(private orgsRepository: InMemoryOrgsRepository) {}
+  constructor(private orgsRepository: OrgsRepository) {}
 
   async execute({
     email,

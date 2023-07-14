@@ -1,8 +1,8 @@
 import { Pet } from '@prisma/client'
 
-import { InMemoryAddressesRepository } from '@/repositories/in-memory/in-memory-addresses-repository'
-import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository'
-import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
+import { AddressesRepository } from '@/repositories/interfaces/addresses-repository'
+import { OrgsRepository } from '@/repositories/interfaces/orgs-repository'
+import { PetsRepository } from '@/repositories/interfaces/pets-repository'
 
 import { CityNotFoundError } from './errors/city-not-found-error'
 
@@ -19,9 +19,9 @@ interface FindNotAdoptedResponse {
 
 export class FindNotAdoptedUseCase {
   constructor(
-    private petsRepository: InMemoryPetsRepository,
-    private orgsRepository: InMemoryOrgsRepository,
-    private addressesRepository: InMemoryAddressesRepository,
+    private petsRepository: PetsRepository,
+    private orgsRepository: OrgsRepository,
+    private addressesRepository: AddressesRepository,
   ) {}
 
   async execute({
