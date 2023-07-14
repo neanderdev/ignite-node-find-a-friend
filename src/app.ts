@@ -3,6 +3,8 @@ import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
 import { ZodError } from 'zod'
 
+import { orgsRoutes } from './http/controllers/orgs/routes'
+
 import { env } from './env'
 
 export const app = fastify()
@@ -21,6 +23,9 @@ app.register(fastifyJwt, {
 
 // Register cookies
 app.register(fastifyCookie)
+
+// Register routes
+app.register(orgsRoutes)
 
 // Register error handler
 app.setErrorHandler((error, request, reply) => {
